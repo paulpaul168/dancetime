@@ -24,6 +24,8 @@ At the moment it downloads from:
 - [Schwebach](https://schwebach.at/events/) (only Tanzcafe for now since they updated their website)
 - [Stanek](https://tanzschulestanek.at/)
 - [Strobl](https://www.tanzschule-strobl.at/perfektion.html)
+- [Svabek](https://www.svabek.at/perfektionen/)
+- [Watzek](https://www.watzek.at/tanzschule/perfektion.php)
 - [Dimitar Stefanin](https://dimitarstefanin.com/)
 
 ## Build it yourself
