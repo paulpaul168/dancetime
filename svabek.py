@@ -1,10 +1,12 @@
-from datetime import datetime
+from datetime import date, datetime
+from zoneinfo import ZoneInfo
 
 import icalendar
 import requests
 
 from event import DanceEvent
 
+VIENNA = ZoneInfo("Europe/Vienna")
 SVABEK_ICAL_URL = "https://www.svabek.at/events/?ical=1"
 SVABEK_WEBSITE = "https://www.svabek.at/perfektionen/"
 SVABEK_DESCRIPTION = (
@@ -12,9 +14,11 @@ SVABEK_DESCRIPTION = (
 )
 
 
-def _to_naive_local(dt: datetime) -> datetime:
+def _to_naive_local(dt: datetime | date) -> datetime | None:
+    if isinstance(dt, date) and not isinstance(dt, datetime):
+        return None
     if dt.tzinfo is not None:
-        return dt.replace(tzinfo=None)
+        return dt.astimezone(VIENNA).replace(tzinfo=None)
     return dt
 
 
@@ -41,6 +45,9 @@ def download_svabek() -> list[DanceEvent]:
             continue
 
         starts_at = _to_naive_local(component.decoded("dtstart"))
+        if starts_at is None:
+            continue
+
         ends_at = component.decoded("dtend")
         if ends_at is not None:
             ends_at = _to_naive_local(ends_at)
